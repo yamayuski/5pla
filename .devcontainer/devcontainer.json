@@ -1,0 +1,20 @@
+{
+  "name": "5pla node.js",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "biomejs.biome",
+        "EditorConfig.EditorConfig",
+        "Vercel.turbo-vsc",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite"
+    }
+  }
+}
