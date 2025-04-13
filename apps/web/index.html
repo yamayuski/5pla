@@ -1,20 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/5pla.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>5pla</title>
+  <title>5プラ</title>
   <meta name="description" content="5pla online game meeting place">
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <meta name="theme-color" content="#ffffff">
+  <style>
+    /* Reset */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+    }
+
+    :root {
+      color-scheme: only dark;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: #F1F1F1;
+      height: 100vh;
+      font-optical-sizing: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helverica, Arial, sans-serif;
+      min-width: 320px;
+      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      overflow: hidden;
+    }
+
+    canvas:focus-visible {
+      outline: none;
+    }
+
+    canvas#root {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+  <canvas id="root"></canvas>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>

@@ -1,0 +1,21 @@
+{
+  "name": "@5pla/games",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@babylonjs/core": "catalog:",
+    "@babylonjs/loaders": "catalog:",
+    "@babylonjs/materials": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

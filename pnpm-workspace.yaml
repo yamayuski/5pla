@@ -3,6 +3,10 @@ packages:
   - packages/*
 
 catalog:
+  '@babylonjs/core': 8.2.0
+  '@babylonjs/inspector': 8.2.0
+  '@babylonjs/loaders': 8.2.0
+  '@babylonjs/materials': 8.2.0
   '@biomejs/biome': 1.9.4
   '@types/node': 22.14.1
   '@types/react': 19.1.1
