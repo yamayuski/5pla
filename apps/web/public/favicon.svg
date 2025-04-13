@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1450)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(1.953125,0,0,1.953125,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="512" height="512"><svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <g id="centered-digit-5">
+    <rect x="156" y="81" width="200" height="50" fill="#FF0000"></rect>
+
+    <rect x="156" y="131" width="50" height="100" fill="#FFA500"></rect>
+
+    <rect x="156" y="231" width="150" height="50" fill="#FFFF00"></rect>
+
+    <rect x="306" y="281" width="50" height="100" fill="#008000"></rect>
+
+    <rect x="156" y="381" width="200" height="50" fill="#0000FF"></rect>
+  </g>
+
+</svg></svg></g></g><defs><clipPath id="SvgjsClipPath1450"><rect width="1000" height="1000" x="0" y="0" rx="350" ry="350"></rect></clipPath></defs></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1451)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(1.953125,0,0,1.953125,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="512" height="512"><svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <g id="centered-digit-5">
+    <rect x="156" y="81" width="200" height="50" fill="#FF0000"></rect>
+
+    <rect x="156" y="131" width="50" height="100" fill="#FFA500"></rect>
+
+    <rect x="156" y="231" width="150" height="50" fill="#FFFF00"></rect>
+
+    <rect x="306" y="281" width="50" height="100" fill="#008000"></rect>
+
+    <rect x="156" y="381" width="200" height="50" fill="#0000FF"></rect>
+  </g>
+
+</svg></svg></g></g><defs><clipPath id="SvgjsClipPath1451"><rect width="1000" height="1000" x="0" y="0" rx="350" ry="350"></rect></clipPath></defs></svg></g></svg>

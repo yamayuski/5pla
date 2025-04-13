@@ -1,0 +1,15 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <g id="centered-digit-5">
+    <rect x="156" y="81" width="200" height="50" fill="#FF0000"/>
+
+    <rect x="156" y="131" width="50" height="100" fill="#FFA500"/>
+
+    <rect x="156" y="231" width="150" height="50" fill="#FFFF00"/>
+
+    <rect x="306" y="281" width="50" height="100" fill="#008000"/>
+
+    <rect x="156" y="381" width="200" height="50" fill="#0000FF"/>
+  </g>
+
+</svg>
