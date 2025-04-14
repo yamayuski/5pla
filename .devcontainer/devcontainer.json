@@ -8,7 +8,8 @@
         "biomejs.biome",
         "EditorConfig.EditorConfig",
         "Vercel.turbo-vsc",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "christian-kohler.npm-intellisense"
       ]
     }
   },

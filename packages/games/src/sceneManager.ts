@@ -1,13 +1,13 @@
 import type { AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import type { Scene } from "@babylonjs/core/scene";
-import { TopScene } from "./topScene";
+import { TitleScene } from "./titleScene";
 
 export class SceneManager {
   private activeScene: Scene | null = null;
   public constructor(public readonly engine: AbstractEngine) {}
 
-  public async startTop() {
-    const scene = new TopScene(this);
+  public async startTitle() {
+    const scene = new TitleScene(this);
     await scene.init();
     this.activeScene = scene.getOriginalScene();
   }

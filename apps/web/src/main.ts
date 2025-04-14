@@ -17,7 +17,7 @@ window.addEventListener("load", async () => {
     engine.resize();
   });
   const sceneManager = new SceneManager(engine);
-  await sceneManager.startTop();
+  await sceneManager.startTitle();
   engine.runRenderLoop(() => {
     sceneManager.render();
   });
