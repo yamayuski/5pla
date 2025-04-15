@@ -41,7 +41,10 @@ export class TitleScene {
   }
 
   public async init() {
-    createLogo(this.originalScene);
+    const logo = createLogo(this.originalScene);
+    this.originalScene.onBeforeRenderObservable.add(() => {
+      logo.rotation.y += this.originalScene.getEngine().getDeltaTime() / 500;
+    });
     createSky(this.originalScene);
     const pipeline = new DefaultRenderingPipeline(
       "pipeline",
