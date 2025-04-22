@@ -1,8 +1,8 @@
 # 5pla - 5 minutes mini-game place
 
-Please visit https://cafe-capy.net/5pla/ !
+https://cafe-capy.net/5pla/
 
-## Installation
+## Debug
 
 ```s
 $ pnpm i

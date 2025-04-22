@@ -1,10 +1,10 @@
 import { SceneManager } from "@5pla/games/sceneManager";
-import { createEngineAsync } from "./createEngineAsync";
+import { createEngineAsync } from "@5pla/games/supports/createEngineAsync";
 
 // Side effects
 import "@babylonjs/core/Materials/standardMaterial";
 import "@babylonjs/core/Materials/PBR/pbrMaterial";
-import "@babylonjs/loaders/glTF/2.0";
+// import "@babylonjs/loaders/glTF/2.0";
 
 window.addEventListener("load", async () => {
   const root = document.getElementById("root") as HTMLCanvasElement | null;
