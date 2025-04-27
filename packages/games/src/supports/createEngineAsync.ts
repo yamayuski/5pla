@@ -2,6 +2,9 @@ import type { AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { WebGPUEngine } from "@babylonjs/core/Engines/webgpuEngine";
 
+/**
+ * WebGLEngine か WebGPU Engine を初期化します
+ */
 export async function createEngineAsync(
   canvas: HTMLCanvasElement,
 ): Promise<AbstractEngine> {

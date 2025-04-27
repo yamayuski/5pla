@@ -25,11 +25,11 @@ export class TitleScene {
       new Vector3(-0.1, 0, 1),
       this.originalScene,
     );
-    light2.intensity = 0.1;
+    light2.intensity = 0.5;
     light.position = new Vector3(2, 0, -10);
     const camera = new ArcRotateCamera(
       "camera1",
-      Math.PI / 2,
+      -Math.PI / 2,
       Math.PI / 2,
       10,
       Vector3.Zero(),
