@@ -2,6 +2,11 @@
   "name": "5pla node.js",
   "dockerFile": "Dockerfile",
   "context": "..",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli": {
+      "version": "latest"
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
