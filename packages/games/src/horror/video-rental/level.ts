@@ -96,7 +96,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       fg: s.fg,
       glow: 0.8,
     });
-    m.isVisible = i === 0;
+    m.setEnabled(i === 0);
   }
   b.register("tv", tvBody);
 
