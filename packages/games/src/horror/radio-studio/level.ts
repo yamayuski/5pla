@@ -76,7 +76,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
     bg: "#e81818",
     fg: "#ffffff",
     glow: 1,
-  }).isVisible = false;
+  }).setEnabled(false);
 
   // ---- ブース ----
   b.room(
