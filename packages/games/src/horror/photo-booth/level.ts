@@ -101,7 +101,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
         fg: i >= 2 ? "#a01020" : "#a02070",
         glow: 0.6,
       },
-    ).isVisible = false;
+    ).setEnabled(false);
     if (i === 1 || i === 2) {
       b.lamp("booth", [cx, 2.3, 7.4], "#ffb0e0", 0.5, 5, false);
     }
