@@ -85,7 +85,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
     },
   );
   sky0.rotation.x = Math.PI / 2;
-  sky0.isVisible = false;
+  sky0.setEnabled(false);
   const sky1 = b.sign(
     "sky-1",
     [
@@ -104,7 +104,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
     },
   );
   sky1.rotation.x = Math.PI / 2;
-  sky1.isVisible = false;
+  sky1.setEnabled(false);
   const sky2 = b.sign(
     "sky-2",
     ["◉　　◉", "　", "ーーーー"],
@@ -118,7 +118,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
     },
   );
   sky2.rotation.x = Math.PI / 2;
-  sky2.isVisible = false;
+  sky2.setEnabled(false);
 
   // ---- 照明 ----
   b.lamp("house", [-3, 3.6, 3], "#f0e0d0", 0.45, 9, true);
