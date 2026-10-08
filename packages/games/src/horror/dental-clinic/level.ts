@@ -99,7 +99,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
     [-3.85, 1.7, 12],
     -Math.PI / 2,
     { bg: "#0a1418", fg: "#a8d8e8", glow: 0.45 },
-  ).isVisible = false;
+  ).setEnabled(false);
   b.sign(
     "xray-base",
     ["山本 様", "▟▙▟▙▟▙▟▙", "歯 32本"],
