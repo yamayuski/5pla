@@ -120,7 +120,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       fg: "#ff6040",
       glow: 0.8,
     },
-  ).isVisible = false;
+  ).setEnabled(false);
   b.sign(
     "call-4",
     ["ナースコール", "4 号室 呼出中"],
@@ -132,7 +132,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       fg: "#ff2020",
       glow: 1,
     },
-  ).isVisible = false;
+  ).setEnabled(false);
 
   // ---- 車椅子 ----
   const wc = new TransformNode("wheelchair", b.scene);
