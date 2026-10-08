@@ -64,7 +64,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       fg: open ? "#f0e8c0" : "#a88c60",
       glow: open ? 0.45 : 0.2,
     });
-    s.isVisible = !open;
+    s.setEnabled(!open);
     return s;
   };
   for (const [n, x, z] of [
@@ -120,7 +120,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       glow: 0.1,
     },
   );
-  empty.isVisible = false;
+  empty.setEnabled(false);
 
   // ---- 彫像 ----
   const statue = b.figure(
