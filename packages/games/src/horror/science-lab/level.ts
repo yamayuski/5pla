@@ -84,7 +84,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
         glow: 0.3,
       },
     );
-    closed.isVisible = true;
+    closed.setEnabled(true);
     const open = b.sign(
       `jar-open-${i}`,
       ["◉ ◉"],
@@ -97,7 +97,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
         glow: 0.4,
       },
     );
-    open.isVisible = false;
+    open.setEnabled(false);
   }
   const big = b.cylinder("big-jar", 0.9, 0.55, [4.1, 1.6, 11], jarGlass, {
     collide: false,
