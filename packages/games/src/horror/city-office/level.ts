@@ -71,7 +71,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       glow: 0.8,
     });
     s.position.x = 0;
-    s.isVisible = i === 0;
+    s.setEnabled(i === 0);
   }
 
   // ---- 発券機と待合の椅子 ----
