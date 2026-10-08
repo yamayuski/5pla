@@ -113,7 +113,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       fg: "#a0c0d8",
       glow: 0.3,
     },
-  ).isVisible = false;
+  ).setEnabled(false);
 
   // ---- 吊られた肉 ----
   b.box("rail", [0.1, 0.1, 9], [0, 2.5, 10.5], steel, { collide: false });
