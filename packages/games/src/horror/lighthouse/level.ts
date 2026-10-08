@@ -58,7 +58,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       glow: 0.9,
     },
   );
-  winPerson.isVisible = false;
+  winPerson.setEnabled(false);
   const winDark = b.sign(
     "win-dark",
     ["　"],
@@ -71,7 +71,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
       glow: 0.05,
     },
   );
-  winDark.isVisible = false;
+  winDark.setEnabled(false);
   b.lamp("cottage", [-3.2, 1.8, 12], "#f0c060", 0.7, 6, false);
 
   // ---- 灯台の根元の部屋と塔 ----
