@@ -1,166 +1,149 @@
 import type { HorrorConfig } from "./kit/types";
 
-/**
- * 「かかしの道」の演出データ。
- * 田んぼ道は x=-2.5〜2.5, z=0〜50（北の奥 z≈48 に農家の灯り）。道の両脇の田んぼにかかし sc-0〜9（左 sc-0〜4 / 右 sc-5〜9）が背を向けて立つ。
- * 異変のたびに、かかしが「こちらを向く」。最後は道の真ん中に立つ blocker が、近づいてくる。
- */
+/** 「かかしの道」の演出データ。畑のかかしが一体ずつ増えて道へ近づき、最後に振り向く。 */
 const SCARES = ["scare-hit", "scare-fallback", "scare-timeout"];
-const turn = (ids: number[]) =>
-  ids.map((i) => ({ type: "face" as const, target: `sc-${i}` }));
 
 export const config: HorrorConfig = {
   slug: "scarecrow-road",
   title: "かかしの道",
   intro: [
-    "実家に帰る夜道。バス停から家までは、田んぼに挟まれた一本道を二十分歩く。",
-    "道の両脇には、秋祭りのかかしが並んでいる。",
+    "終バスを逃し、街灯の少ない夜の田舎道を歩いて帰る。",
+    "畑には、古いかかしが何本か立っている。",
   ],
-  spawn: { position: [0, 1.6, 1], lookAt: [0, 1.5, 30] },
-  fog: { color: [0.03, 0.035, 0.05], density: 0.024 },
-  ambient: { intensity: 0.07, color: [0.75, 0.82, 1] },
+  spawn: { position: [0, 1.6, 0.8], lookAt: [0, 1.6, 30] },
+  fog: { color: [0.02, 0.02, 0.03], density: 0.02 },
+  ambient: { intensity: 0.08, color: [0.8, 0.85, 1] },
   flashlight: {
     enabled: true,
     intensity: 0.6,
     angleDeg: 40,
-    range: 15,
-    color: [0.95, 0.98, 1],
+    range: 14,
+    color: [0.95, 0.97, 1],
   },
-  walkSpeed: 0.085,
-  droneLevel: 0.05,
+  walkSpeed: 0.08,
+  droneLevel: 0.06,
   triggers: [
-    // ---- 0〜1分: 田んぼ道 ----
     {
       id: "intro",
       when: { type: "time", at: 1 },
       actions: [
-        {
-          type: "subtitle",
-          text: "蛙の声と、風に鳴る稲穂。道の両脇に、麦わら帽子のかかしが点々と立っている。みんな、田んぼのほうを向いて。",
-        },
-        { type: "objective", text: "奥の農家の灯りまで歩く" },
+        { type: "subtitle", text: "道の先に「行き止まり」の看板が見える。" },
+        { type: "objective", text: "道の先の民家まで歩く" },
       ],
     },
-    // ---- 1〜3分: 小さな異変 ----
     {
-      id: "turn-1",
-      when: { type: "time", at: 70 },
+      id: "tick",
+      when: { type: "time", at: 60 },
       actions: [
-        ...turn([0, 1, 5, 6]),
-        { type: "sound", sound: "rattle", at: "behind", volume: 0.6 },
-        { type: "heartbeat", bpm: 72 },
+        {
+          type: "sound",
+          sound: "chime",
+          at: [0, 1, 14],
+          volume: 0.5,
+        },
+        { type: "heartbeat", bpm: 70 },
         {
           type: "subtitle",
-          text: "手前の四体のかかしが、さっきと逆の向きに立っている。……道のほうを向いている。",
+          text: "畑の奥で、藁がこすれるような音がする。",
           duration: 5,
         },
       ],
     },
     {
-      id: "crow",
-      when: { type: "time", at: 110 },
+      id: "portrait",
+      when: { type: "time", at: 105 },
       actions: [
-        { type: "sound", sound: "whisper", at: [-4.5, 1.4, 20], volume: 0.7 },
-        { type: "sound", sound: "rattle", at: [4.5, 1.4, 20], volume: 0.5 },
+        { type: "visible", target: "sc2", visible: true },
+        { type: "flicker", duration: 0.8 },
+        { type: "sound", sound: "whisper", at: "behind", volume: 0.5 },
         {
           type: "subtitle",
-          text: "田んぼの奥から、かさかさと藁の擦れる音と、囁き声。蛙の声が、ぴたりと止んでいる。",
+          text: "さっきより、かかしが道に近い気がする。",
           duration: 5,
         },
       ],
     },
     {
-      id: "turn-2",
-      when: { type: "time", at: 145 },
+      id: "piano-note",
+      when: { type: "time", at: 150 },
       actions: [
-        ...turn([2, 3, 7, 8]),
+        { type: "sound", sound: "chime", at: [0, 1, 30], volume: 0.8 },
         { type: "drone", level: 0.2 },
         {
           type: "subtitle",
-          text: "中ほどのかかしも向きが変わった。振り返るたびに、全員がこちらを見ている。",
-          duration: 5,
+          text: "背後で、何かが一歩、土を踏んだ。",
+          duration: 4,
         },
       ],
     },
     {
-      id: "blocker",
-      when: { type: "time", at: 180 },
+      id: "sc-appear",
+      when: { type: "time", at: 185 },
       actions: [
-        { type: "visible", target: "blocker", visible: true },
-        { type: "sound", sound: "creak", at: [0, 1, 36], volume: 0.8 },
+        { type: "flicker", duration: 1.2 },
+        { type: "visible", target: "sc1", visible: true },
+        { type: "sound", sound: "chime", at: [0, 1, 30], volume: 0.9 },
         {
           type: "subtitle",
-          text: "遠く、道の真ん中にかかしが一体立っている。さっきまで、あんなところには無かった。",
-          duration: 5,
+          text: "道のすぐ脇に、かかしが立っている。さっきは無かった。",
+          duration: 6,
         },
       ],
     },
-    // ---- 3〜4分: 灯りが消える ----
     {
-      id: "dark",
-      when: { type: "time", at: 205 },
+      id: "lock",
+      when: { type: "time", at: 215 },
       actions: [
-        { type: "lights", group: "farm", on: false },
-        ...turn([4, 9]),
+        { type: "sound", sound: "slam", at: [0, 1, 0], volume: 0.9 },
+        { type: "lights", group: "road", on: false },
         { type: "flashlight", state: "dim" },
-        { type: "fog", density: 0.045, duration: 4 },
-        { type: "flicker", duration: 1.3 },
-        { type: "heartbeat", bpm: 100 },
+        { type: "visible", target: "sc3", visible: true },
+        { type: "heartbeat", bpm: 110 },
         { type: "drone", level: 0.4 },
         {
           type: "subtitle",
-          text: "奥の農家の灯りが消えた。田んぼの闇の中で、全員のかかしがこちらに顔を向けている。",
+          text: "街灯が一斉に消えた。畑のかかしが、全員こちらを向いている。",
           duration: 6,
         },
-        { type: "objective", text: "" },
       ],
     },
     {
-      id: "approach",
-      when: { type: "after", trigger: "dark", delay: 5 },
+      id: "come",
+      when: { type: "after", trigger: "lock", delay: 8 },
       actions: [
-        { type: "move", target: "blocker", to: [0, 0, 14], duration: 34 },
-        { type: "sound", sound: "footsteps", at: [0, 0, 36], volume: 0.8 },
+        { type: "custom", name: "none" },
+        { type: "sound", sound: "stinger", at: [0, 1, 30], volume: 0.5 },
+        { type: "heartbeat", bpm: 135 },
         {
           type: "subtitle",
-          text: "道の真ん中のかかしが、棒の足で、一歩ずつ近づいてくる。",
+          text: "道の先に、三体目のかかしが立ち塞がっている。顔が、ゆっくり上がる。",
           duration: 5,
         },
-      ],
-    },
-    // ---- 4〜5分: 目の前に ----
-    {
-      id: "near",
-      when: { type: "after", trigger: "approach", delay: 30 },
-      unless: SCARES,
-      actions: [
-        { type: "sound", sound: "breath", at: "behind", volume: 0.9 },
-        { type: "heartbeat", bpm: 135 },
       ],
     },
     {
       id: "scare-hit",
       when: {
         type: "look",
-        target: "blocker",
-        maxAngleDeg: 24,
-        maxDistance: 14,
+        target: "sc3",
+        maxAngleDeg: 20,
+        maxDistance: 30,
       },
-      requires: ["near"],
+      requires: ["come"],
       unless: SCARES,
-      actions: [{ type: "jumpscare", figure: "blocker" }],
+      actions: [{ type: "jumpscare", figure: "ghost" }],
     },
     {
       id: "scare-fallback",
-      when: { type: "after", trigger: "near", delay: 8 },
+      when: { type: "after", trigger: "come", delay: 18 },
       unless: SCARES,
-      actions: [{ type: "jumpscare", figure: "blocker" }],
+      actions: [{ type: "jumpscare", figure: "ghost" }],
     },
     {
       id: "scare-timeout",
       when: { type: "time", at: 330 },
       unless: SCARES,
-      actions: [{ type: "jumpscare", figure: "blocker" }],
+      actions: [{ type: "jumpscare", figure: "ghost" }],
     },
     ...SCARES.map((id) => ({
       id: `end-${id}`,
@@ -169,7 +152,7 @@ export const config: HorrorConfig = {
         {
           type: "end" as const,
           title: "かかしの道",
-          text: "翌朝、田んぼ道に並ぶかかしは、十体のはずが十一体になっていた。\n一体だけ、麦わら帽子の下に、本物の人間の髪が生えていたという。\n\n実家の玄関の鍵は、内側から開いていた。",
+          text: "翌朝、畑のかかしは一本多かった。\n新しい一本は、あなたの靴を履いていた。",
         },
       ],
     })),
