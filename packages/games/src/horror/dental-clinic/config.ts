@@ -1,192 +1,175 @@
 import type { HorrorConfig } from "./kit/types";
 
 /**
- * 「深夜の歯科医院」の演出データ。
- * 待合室(z=0〜6)から診察室(z=6〜16)へ。診察台は (0,12)、ライトスイッチは奥の壁 (1.6,15.85)。
+ * 「閉院のあと」の演出データ。診察室 x=-4〜4, z=0〜8、出入口 clinic-door は南壁。
+ * 診察台は(2,4.5)。歯科医 dentist は最後に診察台へ現れる。
  */
-const SCARES = ["scare-hit", "scare-fallback", "scare-timeout"];
+const SCARES = ["scare-hit", "scare-timeout"];
 
 export const config: HorrorConfig = {
   slug: "dental-clinic",
-  title: "深夜の歯科医院",
+  title: "閉院のあと",
   intro: [
-    "奥歯が割れるように痛んで、深夜の急患受付の看板にすがった。",
-    "待合室には、誰もいない。受付のベルを鳴らしてみよう。",
+    "診察券を忘れて、閉院後の歯科医院に戻ってきた。",
+    "受付の奥で、鍵は開いたままだ。",
   ],
-  spawn: { position: [0, 1.6, 1.3], lookAt: [0, 1.5, 10] },
-  fog: { color: [0.05, 0.07, 0.07], density: 0.02 },
-  ambient: { intensity: 0.1, color: [0.8, 0.95, 0.95] },
+  spawn: { position: [0, 1.6, 1.4], lookAt: [0, 1.5, 6] },
+  fog: { color: [0.05, 0.07, 0.07], density: 0.015 },
+  ambient: { intensity: 0.08, color: [0.8, 1, 0.95] },
   flashlight: {
     enabled: true,
-    intensity: 0.45,
-    angleDeg: 40,
-    range: 11,
-    color: [0.95, 1, 1],
+    intensity: 0.7,
+    angleDeg: 42,
+    range: 12,
+    color: [1, 0.98, 0.95],
   },
-  walkSpeed: 0.085,
+  walkSpeed: 0.08,
   droneLevel: 0.06,
   triggers: [
     {
       id: "intro",
       when: { type: "time", at: 1 },
       actions: [
+        { type: "lights", group: "room", on: true },
         {
           type: "subtitle",
-          text: "消毒液のにおい。時計の秒針の音だけが聞こえる。",
+          text: "消毒液のにおい。蛇口から水が一滴ずつ落ちる音だけがする。",
         },
-        { type: "objective", text: "受付のベルを鳴らす" },
+        { type: "objective", text: "受付の電話の横にある診察券を探す" },
       ],
     },
     {
-      id: "ring",
+      id: "card",
       when: {
         type: "interact",
-        target: "reception-bell",
-        label: "ベルを鳴らす",
-        maxDistance: 2.5,
+        target: "phone",
+        label: "診察券を探す",
+        maxDistance: 2.2,
       },
       actions: [
-        {
-          type: "sound",
-          sound: "bell",
-          at: { node: "reception-bell" },
-          volume: 0.7,
-        },
+        { type: "sound", sound: "chime", at: { node: "phone" }, volume: 0.5 },
         {
           type: "subtitle",
-          text: "チン、と音が響いた。奥から「少々お待ちください」と、くぐもった声がした。",
-          duration: 6,
+          text: "あった。……でも、これは自分の名前ではない。",
+          duration: 5,
         },
-        { type: "objective", text: "" },
+        { type: "objective", text: "帰る" },
       ],
     },
-    // ---- 1〜3分 ----
+    {
+      id: "drip",
+      when: { type: "time", at: 40 },
+      actions: [{ type: "sound", sound: "drip", at: "behind", volume: 0.6 }],
+    },
+    // 小さな異変
     {
       id: "drill",
-      when: { type: "time", at: 70 },
+      when: { type: "time", at: 75 },
       actions: [
-        { type: "sound", sound: "buzz", at: [0, 1.5, 13], volume: 0.7 },
-        { type: "heartbeat", bpm: 72 },
+        { type: "sound", sound: "buzz", at: { node: "tray" }, volume: 0.8 },
         {
           type: "subtitle",
-          text: "診察室から、ドリルの回る音。誰も治療していないはずの部屋から。",
+          text: "診察室のほうで、ドリルが一瞬だけ唸って止まった。",
+          duration: 5,
+        },
+        { type: "heartbeat", bpm: 76 },
+      ],
+    },
+    {
+      id: "chair-turn",
+      when: { type: "time", at: 120 },
+      actions: [
+        { type: "lights", group: "dental", on: true },
+        { type: "sound", sound: "creak", at: [2, 1, 4.5], volume: 0.7 },
+        {
+          type: "subtitle",
+          text: "無影灯が点いた。誰も座っていない診察台が、ゆっくり向きを変えている。",
           duration: 6,
         },
       ],
     },
     {
-      id: "chair",
-      when: { type: "time", at: 110 },
+      id: "xray-on",
+      when: { type: "time", at: 165 },
       actions: [
-        { type: "flicker", duration: 1.0 },
-        { type: "custom", name: "chairTurn" },
-        { type: "sound", sound: "creak", at: [0, 1, 12], volume: 0.8 },
+        { type: "sound", sound: "whisper", at: { node: "xray" }, volume: 0.6 },
         {
           type: "subtitle",
-          text: "診察台が、きしみながらゆっくり回っている。まるで、誰かが座ったみたいに。",
+          text: "壁のレントゲン写真が目に入る。「歯が一本多い」。……自分の名前が書いてある。",
           duration: 6,
         },
+        { type: "drone", level: 0.18 },
       ],
     },
-    {
-      id: "xray",
-      when: { type: "time", at: 150 },
-      actions: [
-        { type: "visible", target: "xray-base", visible: false },
-        { type: "visible", target: "xray", visible: true },
-        { type: "sound", sound: "whisper", at: [-3.8, 1.7, 12], volume: 0.5 },
-        { type: "drone", level: 0.2 },
-        {
-          type: "subtitle",
-          text: "壁のレントゲン写真に、あなたの名前。歯の数が一本、増えている。",
-          duration: 6,
-        },
-      ],
-    },
-    {
-      id: "dentist-1",
-      when: { type: "time", at: 185 },
-      actions: [
-        { type: "flicker", duration: 1.3 },
-        { type: "visible", target: "dentist", visible: true },
-        {
-          type: "sound",
-          sound: "breath",
-          at: { node: "dentist" },
-          volume: 0.6,
-        },
-        {
-          type: "subtitle",
-          text: "診察室の隅に、マスクの医師が背を向けて立っている。「口を開けてください」",
-          duration: 6,
-        },
-      ],
-    },
-    // ---- 3〜4分 ----
+    // 逃げ道
     {
       id: "lock",
       when: { type: "time", at: 205 },
       actions: [
         { type: "door", door: "clinic-door", state: "slam" },
         { type: "door", door: "clinic-door", state: "lock" },
-        { type: "lights", group: "wait", on: false },
-        { type: "lights", group: "room", on: false },
-        { type: "visible", target: "dentist", visible: false },
-        { type: "flashlight", state: "dim" },
-        { type: "flicker", duration: 1.4 },
-        { type: "heartbeat", bpm: 105 },
-        { type: "drone", level: 0.4 },
+        { type: "shake", intensity: 0.03, duration: 1 },
+        { type: "fog", density: 0.035, duration: 4 },
         {
           type: "subtitle",
-          text: "入口の自動ドアが閉まった。全ての照明が落ち、医師の姿も消えている。",
-          duration: 6,
+          text: "出入口が叩きつけるように閉まった。鍵が、内側から掛かる音。",
+          duration: 5,
         },
-        { type: "objective", text: "奥の壁のライトスイッチを入れる" },
-      ],
-    },
-    // ---- 4〜5分 ----
-    {
-      id: "switch",
-      when: {
-        type: "interact",
-        target: "lamp-switch",
-        label: "スイッチを入れる",
-        maxDistance: 2.5,
-      },
-      requires: ["lock"],
-      unless: ["scare-fallback", "scare-timeout"],
-      actions: [
-        { type: "lights", group: "op", on: true },
-        { type: "sound", sound: "buzz", at: "player", volume: 0.9 },
-        { type: "heartbeat", bpm: 140 },
-        {
-          type: "subtitle",
-          text: "無影灯がついた。診察台がこちらを向き、誰かが横たわっている。……起き上がる。",
-          duration: 3,
-        },
+        { type: "heartbeat", bpm: 100 },
         { type: "objective", text: "" },
       ],
     },
     {
-      id: "scare-hit",
-      when: { type: "after", trigger: "switch", delay: 2.2 },
-      unless: SCARES,
-      actions: [{ type: "jumpscare", figure: "ghost" }],
+      id: "blackout",
+      when: { type: "after", trigger: "lock", delay: 10 },
+      actions: [
+        { type: "flicker", duration: 1.5 },
+        { type: "lights", group: "room", on: false },
+        { type: "flashlight", state: "dim" },
+        { type: "sound", sound: "breath", at: "behind", volume: 0.8 },
+        { type: "drone", level: 0.4 },
+        {
+          type: "subtitle",
+          text: "停電。暗闇の中で、無影灯だけが診察台を照らしている。「次の方、どうぞ」",
+          duration: 6,
+        },
+        { type: "objective", text: "診察台の様子を確かめる" },
+      ],
     },
     {
-      id: "scare-fallback",
-      when: { type: "after", trigger: "lock", delay: 60 },
+      id: "dentist-appear",
+      when: { type: "after", trigger: "blackout", delay: 25 },
       unless: SCARES,
       actions: [
-        { type: "lights", group: "op", on: true },
-        { type: "jumpscare", figure: "ghost" },
+        { type: "visible", target: "dentist", visible: true },
+        { type: "face", target: "dentist" },
+        { type: "sound", sound: "buzz", at: { node: "dentist" }, volume: 0.8 },
+        { type: "heartbeat", bpm: 130 },
+        { type: "objective", text: "" },
+        {
+          type: "subtitle",
+          text: "診察台に、マスクの歯科医が座っている。ドリルが回り始めた。",
+          duration: 5,
+        },
       ],
+    },
+    {
+      id: "scare-hit",
+      when: {
+        type: "look",
+        target: "dentist",
+        maxAngleDeg: 22,
+        maxDistance: 20,
+      },
+      requires: ["dentist-appear"],
+      unless: SCARES,
+      actions: [{ type: "jumpscare", figure: "dentist" }],
     },
     {
       id: "scare-timeout",
       when: { type: "time", at: 330 },
       unless: SCARES,
-      actions: [{ type: "jumpscare", figure: "ghost" }],
+      actions: [{ type: "jumpscare", figure: "dentist" }],
     },
     ...SCARES.map((id) => ({
       id: `end-${id}`,
@@ -194,8 +177,8 @@ export const config: HorrorConfig = {
       actions: [
         {
           type: "end" as const,
-          title: "深夜の歯科医院",
-          text: "翌朝、出勤した歯科医師は、診察台に残る手形に気づいた。\n深夜の急患など、受け付けていないはずなのに、受付のカルテにはひとり分の新しい名前があった。\n\n歯の数は、33本と書かれていた。",
+          title: "閉院のあと",
+          text: "翌朝、診察室には誰もいなかった。\nただ診察台には、まだ温かい来院記録が一枚。今夜の患者の欄には、あなたの名前があった。",
         },
       ],
     })),
