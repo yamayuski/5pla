@@ -3,20 +3,26 @@ packages:
   - packages/*
 
 catalog:
-  '@babylonjs/core': ^8.4.0
-  '@babylonjs/inspector': ^8.4.0
-  '@babylonjs/loaders': ^8.4.0
-  '@babylonjs/materials': ^8.4.0
-  '@biomejs/biome': 1.9.4
-  '@types/node': ^22.15.2
-  '@types/react': ^19.1.1
-  '@types/react-dom': ^19.1.2
+  "@babylonjs/core": ^8.4.0
+  "@babylonjs/inspector": ^8.4.0
+  "@babylonjs/loaders": ^8.4.0
+  "@babylonjs/materials": ^8.4.0
+  "@types/node": ^24.0.0
+  "@types/react": ^19.1.1
+  "@types/react-dom": ^19.1.2
   react: ^19.1.0
   react-dom: ^19.1.0
   typescript: ~5.8.3
-  vite: ^6.3.3
+  vite: npm:@voidzero-dev/vite-plus-core@1.4.0
+  vite-plus: 1.4.0
 
 onlyBuiltDependencies:
-  - '@biomejs/biome'
   - core-js-pure
   - esbuild
+overrides:
+  vite@*: "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
