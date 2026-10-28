@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 雨の夜の田舎のバス停（屋外）。道路は x=-6〜6, z=-4〜36。バス停の小屋は x=4.2〜6, z=8〜12（西向きに開放）。

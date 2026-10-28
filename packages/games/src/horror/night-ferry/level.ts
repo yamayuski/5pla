@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 深夜のフェリー。二等船室（x=-5〜5, z=0〜8、カーペット敷きの雑魚寝部屋）と、

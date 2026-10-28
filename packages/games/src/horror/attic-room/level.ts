@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 祖母の家の屋根裏。x=-4〜4, z=0〜10、天井 2.8m。入口は階段側(z=0)の attic-door。

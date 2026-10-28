@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 子ども部屋のクローゼットの中から、すき間ごしに部屋をのぞく。

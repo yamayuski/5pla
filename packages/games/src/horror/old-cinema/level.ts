@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 名画座の場内。x=-5〜5, z=0〜16、天井 6m。南(z=0)に入口、北(z=16)にスクリーン。

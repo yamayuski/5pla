@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 灯台の最上階の管理室（x=-3〜3, z=0〜6）。南壁中央に階段へ続く扉 stair-door。

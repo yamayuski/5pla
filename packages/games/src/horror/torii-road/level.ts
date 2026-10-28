@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の山の参道（屋外）。幅6m(x=-3〜3)、z=-2〜52。朱の鳥居(torii-0〜torii-11、z=4+4*i)が連なり、

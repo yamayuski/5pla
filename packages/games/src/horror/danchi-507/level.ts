@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 古い団地の五階の外廊下。x=-2〜28 を東へ一直線、幅 z=0〜2。

@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /**
  * 「深夜ラジオ 午前2時」の演出データ。

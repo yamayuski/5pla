@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の田舎道。x=-2.5〜2.5, z=-3〜34。東の路肩（x≈2.1）に自販機が3台（vm-0〜2 / z=8, 18, 28）。

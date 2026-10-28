@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 閉店後の百貨店・婦人服フロア。x=-5〜5, z=0〜10。南壁（z=0）中央にシャッター扉。

@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /** 「音楽室の練習曲」の演出データ。ピアノ奥(z=11)に pianist が現れ、最後に振り向く。 */
 const SCARES = ["scare-hit", "scare-fallback", "scare-timeout"];

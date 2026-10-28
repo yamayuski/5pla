@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /** 観覧車のゴンドラ。x=-1.5〜1.5, z=0〜3。向かいの席(0,*,2.5)に乗客が現れる。 */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {

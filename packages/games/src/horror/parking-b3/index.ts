@@ -1,6 +1,6 @@
 import type { AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import { config } from "./config";
-import { startHorrorGame } from "./kit/game";
+import { startHorrorGame } from "@5pla/horror-kit/game";
 import { buildLevel } from "./level";
 
 /** ?horror=parking-b3 で起動 */

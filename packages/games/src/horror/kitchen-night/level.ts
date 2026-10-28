@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 一人暮らしの深夜のダイニングキッチン。x=-3〜3, z=0〜8、天井 2.5m。南(z=0)の front-door が玄関。

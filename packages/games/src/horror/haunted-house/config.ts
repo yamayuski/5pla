@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /**
  * 「出演者は3名です」の演出データ。

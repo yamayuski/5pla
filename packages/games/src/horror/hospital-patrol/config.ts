@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /** 「廃病院の巡回」。廊下は x=-1.5〜1.5, z=-12〜12。入口は南 z=-12。402号室は北端 z=12 の扉。 */
 const SCARES = ["scare", "scare-timeout"];

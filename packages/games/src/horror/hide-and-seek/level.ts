@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /** 祖母の家（廊下・寝室・押入れ・仏間・トイレ）を組み立てる */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {

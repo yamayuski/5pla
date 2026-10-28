@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 閉館後の美術館の長い展示室。x=-5〜5, z=0〜26、天井 4m。入口(z=0)の自動ドアが exit-door。

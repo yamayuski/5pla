@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /** 夜の校舎（廊下・三年A/B組・放送室・ガラス越しの準備室・昇降口）を組み立てる */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {

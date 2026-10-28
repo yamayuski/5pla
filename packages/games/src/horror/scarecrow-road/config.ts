@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /** 「かかしの道」の演出データ。畑のかかしが一体ずつ増えて道へ近づき、最後に振り向く。 */
 const SCARES = ["scare-hit", "scare-fallback", "scare-timeout"];

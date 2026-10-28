@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の理科室。x=-5〜5, z=0〜14、天井 3.2m。南(z=0)に lab-door。実験台が2列、東壁に標本棚、北に教卓。

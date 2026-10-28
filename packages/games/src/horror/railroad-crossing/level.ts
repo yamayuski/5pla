@@ -1,7 +1,7 @@
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の踏切。道は x=-3〜3, z=-4〜40、線路は z≈20 で x 方向。遮断機（gate-bars）は z=18 / z=22 で下りている。

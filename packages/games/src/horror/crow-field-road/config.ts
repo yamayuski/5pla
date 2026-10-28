@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /**
  * 「案山子の道」: 終バスを降りた夜の田んぼ道。南 z=0 バス停、北 z=58 に自宅の門（呼び鈴）。

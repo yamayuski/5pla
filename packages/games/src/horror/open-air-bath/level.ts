@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 山の宿の露天風呂（屋外）。デッキ x=-6〜6, z=0〜8 と、その奥の湯船 x=-4〜4, z=8〜16（湯船には入れない）。

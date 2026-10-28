@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の礼拝堂。x=-5〜5, z=0〜20、天井 6m。入口は南(z=0)の大扉。北(z=20側)に祭壇。

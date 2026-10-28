@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の地下街。通路は x=-3〜3, z=0〜44、天井 3.2m。西側にショーケース4つ（z=10,18,26,34）、マネキン m0〜m3（最初はケースの中で通路を向く）。

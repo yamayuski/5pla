@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 深夜の駅地下のコインロッカー通路。x=-3〜3, z=0〜22、天井 3m。入口(z=0)のシャッター付き自動ドアが gate。

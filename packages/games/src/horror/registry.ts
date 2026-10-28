@@ -22,6 +22,33 @@ export function listHorrorSlugs(): string[] {
   return Object.keys(modules).map((k) => k.split("/")[1] ?? k);
 }
 
+export interface HorrorEntry {
+  slug: string;
+  title: string;
+}
+
+const configModules = import.meta.glob<{
+  config: { title: string };
+}>("./*/config.ts");
+
+/** index.ts と config.ts が揃った作品を、slug 順で返す */
+export async function listHorrorEntries(): Promise<HorrorEntry[]> {
+  const startable = new Set(listHorrorSlugs());
+  const loaded = await Promise.all(
+    Object.entries(configModules).map(async ([key, load]) => {
+      const slug = key.split("/")[1] ?? "";
+      if (!startable.has(slug)) {
+        return null;
+      }
+      const { config } = await load();
+      return { slug, title: config.title || slug };
+    }),
+  );
+  return loaded
+    .filter((entry): entry is HorrorEntry => entry !== null)
+    .sort((a, b) => a.slug.localeCompare(b.slug, "en"));
+}
+
 export async function startHorror(
   engine: AbstractEngine,
   canvas: HTMLCanvasElement,

@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 公園の公衆トイレ。x=-3〜3, z=0〜8。入口 entrance(z=0)、北側に個室 stall-1〜4（z=6が扉面）。

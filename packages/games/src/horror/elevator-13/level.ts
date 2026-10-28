@@ -3,9 +3,9 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel, HorrorGame } from "./kit/game";
-import type { Vec3 } from "./kit/types";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel, HorrorGame } from "@5pla/horror-kit/game";
+import type { Vec3 } from "@5pla/horror-kit/types";
 
 /** 雑居ビルのエレベーター（かご・ホール・廊下・オフィス）を組み立てる */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {

@@ -1,6 +1,6 @@
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夏祭りが終わったあとの、山あいの小さな神社（屋外）。
