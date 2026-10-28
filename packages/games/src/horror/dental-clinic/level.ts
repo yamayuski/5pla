@@ -1,146 +1,100 @@
-import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { LevelBuilder } from "./kit/builders";
 import type { BuildLevel } from "./kit/game";
 
 /**
- * 深夜の歯科医院。x=-4〜4, z=0〜16、天井 3m。入口(z=0)の自動ドアが clinic-door。
- * z=0〜6 が待合室（受付ベル reception-bell）、z=6 の仕切り壁の開口の奥が診察室。
- * 診察台(chair, 0,12)、無影灯(op ランプ群)、壁のレントゲン写真(xray)、ライトスイッチ(lamp-switch)。
+ * 歯科の診察室。部屋は x=-3〜3, z=0〜7、南壁（z=0）中央に扉。
+ * 北壁にモニター（sign）、中央にテーブルとマイク、ソファは東西。
  */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {
-  const floor = b.mat("#c8ccc8", { specular: 0.4 });
-  const wall = b.mat("#dfe6e4");
-  const ceiling = b.mat("#b8bcb8");
-  const glass = b.mat("#b8d8e8", { alpha: 0.2, specular: 0.8 });
-  const vinyl = b.mat("#1f6a78", { specular: 0.4 });
-  const metal = b.mat("#9aa0a4", { specular: 0.7 });
-  const wood = b.mat("#8a6a48");
-  const dark = b.mat("#101214");
+  const carpet = b.mat("#2a1830");
+  const wall = b.mat("#3a2a44");
+  const ceiling = b.mat("#1a1220");
+  const sofa = b.mat("#5a1a3a");
+  const table = b.mat("#18141c", { specular: 0.5 });
+  const black = b.mat("#101010");
 
-  // ---- 建物 ----
-  b.room("clinic", [0, 0, 8], 8, 16, 3, { floor, wall, ceiling }, ["s"]);
-  b.wallWithGap("front", "x", [0, 0, 0], 8, 3, [0, 1.8, 2.4], wall);
-  b.door("clinic-door", [-0.9, 0, 0], 1.8, 2.4, 0, glass, {
+  b.room("box", [0, 0, 3.5], 6, 7, 2.6, { floor: carpet, wall, ceiling }, [
+    "s",
+  ]);
+  b.wallWithGap("front", "x", [0, 0, 0], 6, 2.6, [0, 1.05, 2.1], wall);
+  b.door("room-door", [-0.5, 0, 0], 1, 2.1, 0, b.mat("#2a2030"), {
     open: true,
     interactive: false,
   });
-  b.box("street", [8, 0.2, 4], [0, -0.1, -2], floor);
+  // 扉の外の廊下（歩き出せない）
   for (const [n, size, pos] of [
-    ["street-w", [0.2, 4, 4], [-4, 2, -2]],
-    ["street-e", [0.2, 4, 4], [4, 2, -2]],
-    ["street-s", [8, 4, 0.2], [0, 2, -4]],
+    ["hall-s", [6, 3, 0.2], [0, 1.5, -3]],
+    ["hall-w", [0.2, 3, 3], [-1.5, 1.5, -1.5]],
+    ["hall-e", [0.2, 3, 3], [1.5, 1.5, -1.5]],
   ] as const) {
     b.box(n, size, pos, wall).isVisible = false;
   }
-  b.wallWithGap("partition", "x", [0, 0, 6.5], 8, 3, [0, 2.6, 2.4], wall);
-  b.sign(
-    "clinic-sign",
-    ["やまもと歯科", "急患 24時間受付"],
-    [2.4, 0.7],
-    [0, 2.3, 0.12],
-    0,
-    { bg: "#f4f8f6", fg: "#1f6a78", glow: 0.5 },
-  );
+  b.box("hall-floor", [3, 0.2, 3], [0, -0.1, -1.5], carpet);
 
-  // ---- 待合室 ----
-  b.box("sofa", [3, 0.5, 0.8], [-2.4, 0.25, 4.6], vinyl);
-  b.box("magazines", [1.2, 0.4, 0.6], [-2.4, 0.2, 3.2], wood);
-  b.box("desk", [2.4, 1.0, 0.8], [2.6, 0.5, 4.6], wood);
-  const bell = b.box(
-    "reception-bell",
-    [0.2, 0.15, 0.2],
-    [2.6, 1.08, 4.5],
-    metal,
-    {
-      collide: false,
-    },
-  );
-  b.register("reception-bell", bell);
-
-  // ---- 診察室 ----
-  const chair = new TransformNode("chair", b.scene);
-  chair.position.set(0, 0, 12);
-  b.box("chair-base", [0.5, 0.5, 0.5], [0, 0.25, 0], metal, {
-    collide: false,
-    parent: chair,
-  });
-  b.box("chair-seat", [0.8, 0.2, 1.0], [0, 0.65, 0], vinyl, {
-    collide: false,
-    parent: chair,
-  });
-  const back = b.box("chair-back", [0.8, 0.2, 1.2], [0, 1.0, -0.9], vinyl, {
-    collide: false,
-    parent: chair,
-  });
-  back.rotation.x = -0.6;
-  b.box("chair-head", [0.4, 0.3, 0.2], [0, 1.45, -1.3], vinyl, {
-    collide: false,
-    parent: chair,
-  });
-  b.register("chair", chair);
-  b.box("chair-guard", [1.2, 1.2, 1.8], [0, 0.6, 12], dark).isVisible = false;
-  b.box("tray", [0.5, 1.0, 0.8], [1.3, 0.5, 11.2], metal);
-  b.box("cabinet", [3, 2.0, 0.5], [-2.4, 1.0, 15.6], wood);
-  b.box("sink", [0.8, 0.9, 0.6], [3.4, 0.45, 13.5], metal);
+  for (const x of [-2.5, 2.5]) {
+    b.box(`sofa-${x}`, [0.8, 0.45, 4], [x, 0.23, 3.8], sofa);
+    b.box(`sofa-back-${x}`, [0.2, 0.9, 4], [x * 1.12, 0.6, 3.8], sofa);
+  }
+  b.box("table", [1.2, 0.5, 2.4], [0, 0.25, 3.6], table);
+  const mic = b.box("mic", [0.07, 0.07, 0.25], [0, 0.54, 3.6], black);
+  b.register("mic", mic);
   const sw = b.box(
-    "lamp-switch",
-    [0.12, 0.2, 0.05],
-    [1.6, 1.4, 15.85],
-    b.mat("#e8e8e8", { emissive: "#506060" }),
+    "switch",
+    [0.1, 0.03, 0.2],
+    [0.3, 0.52, 4.3],
+    b.mat("#303030"),
     { collide: false },
   );
-  b.register("lamp-switch", sw);
+  b.register("switch", sw);
 
-  // 壁のレントゲン写真
+  const tvOpts = { bg: "#e0e8f0", fg: "#101820", glow: 0.9 };
   b.sign(
-    "xray",
-    ["山本 様", "▟▙▟▙▟▙▟▙", "歯 33本"],
-    [1.2, 0.8],
-    [-3.85, 1.7, 12],
-    -Math.PI / 2,
-    { bg: "#0a1418", fg: "#a8d8e8", glow: 0.45 },
-  ).setEnabled(false);
+    "xray-a",
+    ["X線写真", "右下 6番"],
+    [2.4, 1.3],
+    [0, 1.5, 6.95],
+    0,
+    tvOpts,
+  );
+  const tvB = b.sign(
+    "xray-b",
+    ["■ ■ ■ ■", "ぬいて", "うしろにいる"],
+    [2.4, 1.3],
+    [0, 1.5, 6.93],
+    0,
+    { bg: "#300000", fg: "#ff3030", glow: 0.9 },
+  );
+  tvB.setEnabled(false);
   b.sign(
-    "xray-base",
-    ["山本 様", "▟▙▟▙▟▙▟▙", "歯 32本"],
-    [1.2, 0.8],
-    [-3.88, 1.7, 12],
-    -Math.PI / 2,
+    "price",
+    ["本日の受付", "終了しました"],
+    [1, 0.4],
+    [-1.5, 1.9, 0.12],
+    0,
     {
-      bg: "#0a1418",
-      fg: "#a8d8e8",
-      glow: 0.3,
+      bg: "#d8d0b8",
+      fg: "#2a1a0a",
+      glow: 0.2,
     },
   );
 
-  // ---- 照明 ----
-  b.lamp("wait", [0, 2.7, 3], "#e8f4f0", 0.6, 9, true);
-  b.lamp("room", [0, 2.7, 10], "#e8f4f0", 0.55, 9, true);
-  b.lamp("op", [0, 2.4, 12], "#fffbe8", 1.2, 7, true).light.setEnabled(false);
+  b.lamp("disco", [0, 2.3, 3.5], "#c030ff", 0.6, 8, false);
+  b.lamp("red", [0, 2.3, 5.5], "#ff2020", 0.5, 7, false).light.setEnabled(
+    false,
+  );
 
-  // ---- 人影 ----
-  const style = {
-    skin: "#c8c8c0",
-    hair: "#d8e8e0",
-    cloth: "#7ab0a8",
-    eyes: "#000000",
-    height: 1.12,
-  };
-  b.figure("dentist", [-3, 0, 14.4], style, false).rotation.y = Math.PI;
-  b.figure("ghost", [0, 0, -40], style, false);
-
-  let turning = false;
-  return {
-    update: (_g, dt) => {
-      if (turning) {
-        const c = chair.rotation;
-        c.y = Math.min(c.y + 0.9 * dt, 2.2);
-      }
+  b.figure(
+    "doctor",
+    [-2.4, 0.45, 5.8],
+    {
+      skin: "#b8c0c0",
+      hair: "#050505",
+      cloth: "#e8e8e8",
+      eyes: "#000000",
+      height: 1.0,
+      longHair: true,
     },
-    custom: {
-      chairTurn: () => {
-        turning = true;
-      },
-    },
-  };
+    false,
+  );
+  return {};
 };
