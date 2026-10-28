@@ -1,11 +1,11 @@
 import path from "node:path";
-import { defineConfig } from "vite";
+import { defineConfig, lazyPlugins } from "vite-plus";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
   base: "/5pla",
-  plugins: [
+  plugins: lazyPlugins(() => [
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
@@ -17,7 +17,7 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
     }),
-  ],
+  ]),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -1,23 +1,25 @@
 {
   "name": "5pla",
   "version": "1.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "check-types": "turbo run check-types"
+    "build": "vp run -r build",
+    "dev": "vp run -r --parallel dev",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "fmt": "vp fmt",
+    "check": "vp check",
+    "check-types": "vp run -r check-types",
+    "test": "vp run -r test"
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
-    "turbo": "^2.5.2",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
   },
-  "packageManager": "pnpm@10.8.1",
   "engines": {
-    "node": ">=22",
+    "node": "^24",
     "pnpm": ">=10.0.0"
-  }
+  },
+  "packageManager": "pnpm@10.8.1"
 }
