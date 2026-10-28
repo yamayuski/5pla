@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 学校の室内プール。デッキ x=-8〜8, z=0〜22、水面 x=-3.5〜3.5, z=5〜19（水深 1.6m）。

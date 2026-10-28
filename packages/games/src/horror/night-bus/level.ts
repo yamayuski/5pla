@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜行バスの車内。x=-1.5〜1.5, z=0〜15、天井高 2.3m。通路 x=-0.6〜0.6、座席は左右 x=±1.0 の5列。

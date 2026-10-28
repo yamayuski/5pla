@@ -1,7 +1,7 @@
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /** 深夜のコインランドリー（洗濯機・乾燥機・折りたたみ台・自販機・入口の外）を組み立てる */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {

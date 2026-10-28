@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 幼稚園の遊戯室。x=-6〜6, z=0〜12（入口 z=0）、天井 3m。小さな机と椅子、壁一面の園児の絵、北のピアノ。

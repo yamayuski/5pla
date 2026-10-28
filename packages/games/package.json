@@ -6,9 +6,11 @@
   },
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vp test run"
   },
   "dependencies": {
+    "@5pla/horror-kit": "workspace:*",
     "@babylonjs/core": "catalog:",
     "@babylonjs/loaders": "catalog:",
     "@babylonjs/materials": "catalog:"

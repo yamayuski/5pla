@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の校舎の音楽室。x=-5〜5, z=0〜12。グランドピアノは奥(z=10)、ピアノ椅子の位置に pianist。

@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 深夜ラジオ局のサブ(調整室)とブース。調整室 x=-4〜4, z=0〜8、ブース x=-3〜3, z=8〜13（天井 2.6m）。

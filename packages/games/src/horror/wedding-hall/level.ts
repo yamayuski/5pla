@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 結婚式場の宴会場。x=-8〜8, z=0〜20（入口 z=0）。丸テーブル6卓（x=±4.5, z=5,9,13）、通路の奥 z=16 にケーキ台、北にステージとスクリーン。

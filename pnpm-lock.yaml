@@ -160,6 +160,9 @@ importers:
 
   packages/games:
     dependencies:
+      '@5pla/horror-kit':
+        specifier: workspace:*
+        version: link:../horror-kit
       '@babylonjs/core':
         specifier: 'catalog:'
         version: 8.4.0
@@ -182,6 +185,19 @@ importers:
       vite-plus:
         specifier: 'catalog:'
         version: 1.4.0(@types/node@24.19.2)(@vitest/ui@5.0.5(vitest@5.0.5))(esbuild@0.28.2)(jiti@2.4.2)(terser@5.51.2)(typescript@5.8.3)
+
+  packages/horror-kit:
+    dependencies:
+      '@babylonjs/core':
+        specifier: 'catalog:'
+        version: 8.4.0
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
 
   packages/typescript-config: {}
 

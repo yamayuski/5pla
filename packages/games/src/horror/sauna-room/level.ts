@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 深夜営業のスパのサウナ室。x=-2.5〜2.5, z=0〜5、天井 2.6m。南(z=0)に出入口のガラス戸(sauna-door)。

@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜の寺の墓地。参道は x=-1.5〜1.5, z=0〜32、入口の門(cemetery-gate)は z=0。左右(x=±3.2)に墓石が z=6〜27 に並び、

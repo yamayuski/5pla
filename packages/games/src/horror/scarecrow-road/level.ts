@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /** 夜の田舎道。x=-3〜3, z=0〜40。畑の中のかかし sc1〜sc3 が少しずつ道へ近づく。 */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {

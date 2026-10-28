@@ -1,7 +1,7 @@
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
-import type { LevelBuilder } from "./kit/builders";
-import { v3 } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import { v3 } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * ボウリング場。x=-8〜8, z=0〜22。レーン4本（中心 x=-3.75, -1.25, 1.25, 3.75、幅2.0）が z=6〜20。

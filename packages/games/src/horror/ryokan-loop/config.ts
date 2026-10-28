@@ -1,4 +1,4 @@
-import type { HorrorAction, HorrorConfig } from "./kit/types";
+import type { HorrorAction, HorrorConfig } from "@5pla/horror-kit/types";
 
 /**
  * 「椿の間」の演出データ。

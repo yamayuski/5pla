@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 古い納屋。x=-4.5〜4.5, z=0〜20（入口 z=0）。中央の通路 x=-1.2〜1.2、左右に馬房が3つずつ。

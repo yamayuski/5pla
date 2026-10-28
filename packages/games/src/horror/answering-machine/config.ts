@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /**
  * 「留守電」の演出データ。1Kの部屋 x=-3〜3, z=0〜8。玄関(entry-door)は z=0。

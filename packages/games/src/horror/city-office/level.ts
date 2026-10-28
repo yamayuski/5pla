@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 夜間受付の市役所の窓口ホール。x=-6〜6, z=0〜14、天井 3.2m。入口(z=0)の自動ドアが entrance。

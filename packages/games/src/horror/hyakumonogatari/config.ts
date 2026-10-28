@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /** 「百物語」: 古い家屋の長い廊下。突き当たりのおりんを鳴らすと…。 */
 const SCARES = ["scare-hit", "scare-timeout"];

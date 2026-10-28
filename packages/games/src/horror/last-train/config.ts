@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /**
  * 「終電のあとで」の演出データ。
@@ -25,6 +25,8 @@ export const config: HorrorConfig = {
   },
   walkSpeed: 0.11,
   droneLevel: 0.15,
+  // 人影は足元原点の TransformNode。視線は目の高さに合わせる
+  lookNodeCenter: "eye",
   triggers: [
     // ---- 0〜1分: 終電後のホーム ----
     {

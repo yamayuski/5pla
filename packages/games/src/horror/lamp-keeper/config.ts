@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /** 「灯台の夜」の演出データ。管理室 x=-3〜3, z=0〜6。beacon(0,5.3)、keeper は最後に装置の前へ現れる。 */
 const SCARES = ["scare-hit", "scare-timeout"];

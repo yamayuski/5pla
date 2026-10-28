@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 深夜のゲームセンターのプリクラコーナー。x=-6〜6, z=0〜9、天井 3m。入口(z=0)の自動ドアが gate。

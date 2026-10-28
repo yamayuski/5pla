@@ -1,4 +1,4 @@
-import type { HorrorConfig } from "./kit/types";
+import type { HorrorConfig } from "@5pla/horror-kit/types";
 
 /** 「てっぺんの手前」。ゴンドラは3m×3m。窓は東西。向かいの席 rider が最後に現れる。 */
 const SCARES = ["scare-hit", "scare-timeout"];

@@ -1,5 +1,5 @@
-import type { LevelBuilder } from "./kit/builders";
-import type { BuildLevel } from "./kit/game";
+import type { LevelBuilder } from "@5pla/horror-kit/builders";
+import type { BuildLevel } from "@5pla/horror-kit/game";
 
 /**
  * 遊園地のお化け屋敷の通路。x=-2〜2, z=0〜34、天井 2.6m。入口 entrance(z=0)、出口 exit(z=34、鍵つき)。
