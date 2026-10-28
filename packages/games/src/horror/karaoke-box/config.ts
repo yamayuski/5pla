@@ -1,231 +1,219 @@
 import type { HorrorConfig } from "./kit/types";
 
 /**
- * 「延長しますか」の演出データ。
- * 個室 x=-2.5〜2.5, z=0〜5（北壁 z=5 にモニター、東壁 x=2.5 にフロント直通の内線電話）。
- * 南壁 z=0 のガラス窓つきドア（x=0.8〜1.7）の外が廊下 z=-2.4〜0。廊下の西隣が 6 号室。
+ * 「延長しますか？」の演出データ。
+ * 部屋は x=-3〜3, z=0〜7。扉 room-door（南）、テーブルの mic / remote、北のモニター tv-a / tv-b。
+ * 最後は singer（ソファに座る白い服の女）が現れる。
  */
-const SCARES = ["call-front", "scare-timeout"];
+const SCARES = ["scare-hit", "scare-timeout"];
 
 export const config: HorrorConfig = {
   slug: "karaoke-box",
-  title: "延長しますか",
+  title: "延長しますか？",
   intro: [
-    "終電を逃した夜、駅前のカラオケで朝までひとりで過ごすことにした。",
-    "7 号室。フリータイム、ドリンクバー付き。",
+    "終電を逃して、一人でカラオケに入った。",
+    "朝までのフリータイム。ただ静かに過ごしたいだけだった。",
   ],
-  spawn: { position: [-1.4, 1.6, 2.6], lookAt: [0, 1.5, 5] },
-  fog: { color: [0.04, 0.02, 0.06], density: 0.02 },
-  ambient: { intensity: 0.08, color: [0.7, 0.6, 1] },
+  spawn: { position: [0, 1.6, 1.2], lookAt: [0, 1.5, 6] },
+  fog: { color: [0.03, 0.02, 0.05], density: 0.015 },
+  ambient: { intensity: 0.08, color: [0.8, 0.7, 1] },
   flashlight: {
-    enabled: false,
-    intensity: 0.7,
+    enabled: true,
+    intensity: 0.5,
     angleDeg: 45,
-    range: 9,
-    color: [0.9, 0.95, 1],
+    range: 10,
+    color: [1, 0.97, 0.9],
   },
-  walkSpeed: 0.07,
-  droneLevel: 0.02,
+  walkSpeed: 0.08,
+  droneLevel: 0.05,
   triggers: [
-    // ---- 0〜1分: いつものカラオケ ----
     {
       id: "intro",
       when: { type: "time", at: 1 },
       actions: [
         {
           type: "subtitle",
-          text: "隣の部屋から、下手な歌が漏れてくる。こっちも何か入れよう。",
+          text: "壁越しに、どこかの部屋の歌声が薄く漏れてくる。",
         },
-        { type: "objective", text: "テーブルのリモコンで曲を入れる" },
+        { type: "objective", text: "リモコンで曲を入れる" },
       ],
     },
     {
-      id: "pick-song",
+      id: "disco-on",
       when: {
         type: "interact",
         target: "remote",
         label: "曲を入れる",
-        maxDistance: 2.2,
+        maxDistance: 2.4,
       },
       actions: [
-        { type: "visible", target: "monitor-idle", visible: false },
-        { type: "visible", target: "monitor-song", visible: true },
-        { type: "sound", sound: "chime", at: { node: "monitor-song" } },
+        { type: "lights", group: "disco", on: true },
+        { type: "sound", sound: "chime", at: { node: "remote" }, volume: 0.5 },
         {
           type: "subtitle",
-          text: "とりあえず、いつもの一曲。……前奏が始まった。",
-          duration: 3,
+          text: "ミラーボールが回り始めた。でも、歌う気にはなれない。",
+          duration: 4,
         },
         { type: "objective", text: "" },
       ],
     },
-    // ---- 1〜3分: 小さな異変 ----
     {
-      id: "phone-1",
-      when: { type: "time", at: 70 },
+      id: "disco-auto",
+      when: { type: "time", at: 40 },
+      unless: ["disco-on"],
       actions: [
-        { type: "sound", sound: "phone", at: { node: "phone" }, volume: 0.9 },
+        { type: "lights", group: "disco", on: true },
         {
           type: "subtitle",
-          text: "内線が鳴っている。まだ 10 分前の電話には早い。",
+          text: "予約していた曲が、勝手に流れ始めた。",
           duration: 4,
         },
-        { type: "objective", text: "内線電話に出る" },
+        { type: "objective", text: "" },
       ],
     },
+    // 小さな異変
     {
-      id: "phone-1-answer",
-      when: {
-        type: "interact",
-        target: "phone",
-        label: "受話器を取る",
-        maxDistance: 2,
-      },
-      requires: ["phone-1"],
-      unless: ["lock"],
+      id: "wall-knock",
+      when: { type: "time", at: 75 },
       actions: [
-        { type: "sound", sound: "static", at: "player", volume: 0.35 },
+        { type: "sound", sound: "knock", at: [-3, 1.5, 3], volume: 0.8 },
         {
           type: "subtitle",
-          text: "「……お連れ様が、お見えです」……ガチャ。連れなんて、いない。",
+          text: "隣の歌声が止んだ。……壁を、内側から叩く音。",
           duration: 5,
-        },
-        { type: "objective", text: "" },
-      ],
-    },
-    {
-      id: "passer",
-      when: { type: "time", at: 112 },
-      actions: [
-        { type: "visible", target: "passer", visible: true },
-        { type: "move", target: "passer", to: [5.5, 0, -1.2], duration: 4.5 },
-        { type: "sound", sound: "footsteps", at: [0, 0.2, -1.2], volume: 0.5 },
-        {
-          type: "subtitle",
-          text: "ドアのガラスの向こうを、誰かがゆっくり横切った。",
-          duration: 4,
         },
         { type: "heartbeat", bpm: 76 },
       ],
     },
     {
-      id: "neighbor-quiet",
-      when: { type: "time", at: 140 },
+      id: "tv-glitch",
+      when: { type: "time", at: 125 },
       actions: [
-        { type: "sound", sound: "giggle", at: [-4, 1.5, 2.5], volume: 0.6 },
+        { type: "visible", target: "tv-a", visible: false },
+        { type: "visible", target: "tv-b", visible: true },
+        { type: "sound", sound: "static", at: { node: "tv-b" }, volume: 0.7 },
         {
           type: "subtitle",
-          text: "隣の歌が止んだ。壁のすぐ向こうで、くすくす笑う声。",
-          duration: 4,
-        },
-      ],
-    },
-    {
-      id: "queued",
-      when: { type: "time", at: 165 },
-      actions: [
-        { type: "visible", target: "monitor-idle", visible: false },
-        { type: "visible", target: "monitor-song", visible: false },
-        { type: "visible", target: "monitor-queue", visible: true },
-        { type: "sound", sound: "buzz", at: { node: "monitor-queue" } },
-        { type: "flicker", duration: 0.9 },
-        { type: "drone", level: 0.2 },
-        {
-          type: "subtitle",
-          text: "入れていない曲が予約されている。曲名は『ふたりで』。",
+          text: "モニターの歌詞が、見たことのない文字列に変わった。",
           duration: 5,
         },
       ],
     },
-    // ---- 3〜4分: 閉じ込められる ----
+    {
+      id: "mic-whisper",
+      when: { type: "time", at: 165 },
+      actions: [
+        { type: "sound", sound: "whisper", at: { node: "mic" }, volume: 0.7 },
+        {
+          type: "subtitle",
+          text: "テーブルのマイクから、ささやきが漏れた。「……いっしょに……うたお……」",
+          duration: 5,
+        },
+        { type: "drone", level: 0.18 },
+      ],
+    },
+    // 逃げ道が塞がる
     {
       id: "lock",
-      when: { type: "time", at: 200 },
+      when: { type: "time", at: 205 },
       actions: [
         { type: "door", door: "room-door", state: "slam" },
         { type: "door", door: "room-door", state: "lock" },
-        { type: "lights", group: "corridor", on: false },
-        { type: "visible", target: "passer", visible: false },
-        { type: "lights", group: "room", on: false },
-        { type: "flicker", duration: 1.2 },
-        { type: "drone", level: 0.45 },
-        { type: "heartbeat", bpm: 100 },
+        { type: "sound", sound: "slam", at: [0, 1, 0], volume: 0.8 },
+        { type: "shake", intensity: 0.03, duration: 1 },
+        { type: "fog", density: 0.035, duration: 4 },
         {
           type: "subtitle",
-          text: "ドアが勢いよく閉まった。廊下も部屋も真っ暗だ。ドアノブが回らない。",
+          text: "扉が勝手に閉まった。内線は鳴りっぱなしで、誰も出ない。",
           duration: 5,
         },
-        { type: "objective", text: "内線でフロントに知らせる" },
+        { type: "heartbeat", bpm: 96 },
       ],
     },
     {
-      id: "knock",
-      when: { type: "after", trigger: "lock", delay: 9 },
+      id: "blackout",
+      when: { type: "after", trigger: "lock", delay: 10 },
       actions: [
-        { type: "sound", sound: "knock", at: [-2.5, 1.4, 2.5], volume: 1 },
+        { type: "flicker", duration: 1.5 },
+        { type: "lights", group: "disco", on: false },
+        { type: "lights", group: "red", on: true },
+        { type: "flashlight", state: "dim" },
+        { type: "sound", sound: "breath", at: "behind", volume: 0.8 },
+        { type: "drone", level: 0.4 },
         {
           type: "subtitle",
-          text: "隣との壁を、内側から叩く音。ドン。ドン。",
-          duration: 4,
+          text: "照明が赤に変わった。マイクが、ひとりでに転がる。",
+          duration: 5,
         },
+        { type: "objective", text: "マイクを止める" },
       ],
     },
     {
-      id: "duet",
-      when: { type: "after", trigger: "lock", delay: 18 },
-      actions: [
-        { type: "visible", target: "monitor-queue", visible: false },
-        { type: "visible", target: "monitor-duet", visible: true },
-        { type: "sound", sound: "whisper", at: { node: "monitor-duet" } },
-        { type: "heartbeat", bpm: 120 },
-        {
-          type: "subtitle",
-          text: "モニターの歌詞が、勝手に流れはじめた。",
-          duration: 4,
-        },
-      ],
-    },
-    // ---- 4〜5分: 受話器の向こう ----
-    {
-      id: "call-front",
+      id: "mic-take",
       when: {
         type: "interact",
-        target: "phone",
-        label: "フロントに電話する",
-        maxDistance: 2,
+        target: "mic",
+        label: "マイクを置き直す",
+        maxDistance: 2.4,
       },
-      requires: ["lock"],
+      requires: ["blackout"],
       unless: SCARES,
       actions: [
-        { type: "drone", level: 0 },
-        { type: "heartbeat", bpm: 0 },
-        { type: "sound", sound: "static", at: "player", volume: 0.25 },
+        { type: "visible", target: "singer", visible: true },
+        { type: "face", target: "singer" },
+        { type: "sound", sound: "giggle", at: { node: "singer" }, volume: 0.7 },
+        { type: "heartbeat", bpm: 130 },
+        { type: "objective", text: "" },
         {
           type: "subtitle",
-          text: "「……お時間です。延長、しますか」受話器の声が、すぐ後ろからも聞こえた。",
-          duration: 3,
+          text: "向かいのソファに、白い服の女が座っている。……マイクを握って。",
+          duration: 5,
+        },
+      ],
+    },
+    {
+      id: "mic-auto",
+      when: { type: "after", trigger: "blackout", delay: 35 },
+      unless: ["mic-take", ...SCARES],
+      actions: [
+        { type: "visible", target: "singer", visible: true },
+        { type: "face", target: "singer" },
+        { type: "sound", sound: "giggle", at: { node: "singer" }, volume: 0.7 },
+        { type: "heartbeat", bpm: 130 },
+        { type: "objective", text: "" },
+        {
+          type: "subtitle",
+          text: "向かいのソファに、白い服の女が座っている。",
+          duration: 5,
         },
       ],
     },
     {
       id: "scare-hit",
-      when: { type: "after", trigger: "call-front", delay: 2.4 },
-      actions: [{ type: "jumpscare", figure: "guest" }],
+      when: {
+        type: "look",
+        target: "singer",
+        maxAngleDeg: 22,
+        maxDistance: 20,
+      },
+      requiresAny: ["mic-take", "mic-auto"],
+      unless: SCARES,
+      actions: [{ type: "jumpscare", figure: "singer" }],
     },
     {
       id: "scare-timeout",
       when: { type: "time", at: 320 },
       unless: SCARES,
-      actions: [{ type: "jumpscare", figure: "guest" }],
+      actions: [{ type: "jumpscare", figure: "singer" }],
     },
-    ...["scare-hit", "scare-timeout"].map((id) => ({
+    ...SCARES.map((id) => ({
       id: `end-${id}`,
       when: { type: "after" as const, trigger: id, delay: 2.4 },
       actions: [
         {
           type: "end" as const,
-          title: "延長しますか",
-          text: "翌朝、7 号室の伝票には「2 名様」と印字されていた。\n店員は誰も、二人目が入るところを見ていない。\n\n6 号室は、ずっと前から使われていない。",
+          title: "延長しますか？",
+          text: "翌朝、清掃の店員は誰もいない個室で、点いたままのモニターを見つけた。\n予約履歴には、深夜から延長された二名分の入室記録だけが残っていた。",
         },
       ],
     })),
