@@ -1,62 +1,92 @@
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { LevelBuilder } from "./kit/builders";
 import type { BuildLevel } from "./kit/game";
 
-/** 夜の田舎道。x=-3〜3, z=0〜40。畑の中のかかし sc1〜sc3 が少しずつ道へ近づく。 */
+/** 夜の農道。x=-3〜3, z=0〜26 の一本道。奥(z=26)に鉄の門 gate。かかしは道の両脇。 */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {
-  const road = b.mat("#2a2820");
-  const field = b.mat("#1a2414");
-  const wall = b.mat("#0a0c0a");
-  b.box("road", [6, 0.2, 42], [0, -0.1, 20], road);
-  b.box("field-w", [30, 0.2, 42], [-18, -0.15, 20], field);
-  b.box("field-e", [30, 0.2, 42], [18, -0.15, 20], field);
-  b.box("fence-w", [0.2, 4, 42], [-30, 2, 20], wall);
-  b.box("fence-e", [0.2, 4, 42], [30, 2, 20], wall);
-  b.box("end-s", [60, 4, 0.2], [0, 2, -1], wall);
-  b.box("end-n", [60, 4, 0.2], [0, 2, 42], wall);
-  b.box("sky", [60, 0.2, 42], [0, 4, 20], wall);
-  // 道端の電柱灯
-  b.lamp("road", [0, 3, 6], "#ffd890", 0.6, 10, false);
-  b.lamp("road", [0, 3, 22], "#ffd890", 0.5, 10, false);
-  b.sign(
-    "sign",
-    ["この先", "行き止まり"],
-    [1.4, 0.8],
-    [2.6, 1.4, 30],
-    Math.PI / 2 + Math.PI,
-    {
-      bg: "#2a2a20",
-      fg: "#e8e0c0",
-      glow: 0.2,
-    },
-  );
-  const look = {
-    skin: "#b8a070",
-    hair: "#7a6a30",
-    cloth: "#4a3a22",
-    eyes: "#000000",
-    height: 1.7,
-  };
-  const spots: [string, number, number][] = [
-    ["sc1", -6, 14],
-    ["sc2", 4.5, 22],
-    ["sc3", -3.5, 30],
-  ];
-  for (const [n, x, z] of spots) {
-    const f = b.figure(n, [x, 0, z], look, false);
-    f.rotation.y = Math.PI;
-  }
-  b.figure("ghost", [0, 0, -40], look, false);
-  let t = 0;
-  return {
-    update: (g, dt) => {
-      t += dt;
-      const c = g.camera.position;
-      for (const [n] of spots) {
-        const p = g.node(n);
-        if (p && t > 200)
-          p.rotation.y = Math.atan2(c.x - p.position.x, c.z - p.position.z);
-      }
-    },
-    custom: { none: () => {} },
-  };
+	const road = b.mat("#3a3830");
+	const hedge = b.mat("#18221a");
+	const sky = b.mat("#05060a");
+	const straw = b.mat("#b89a4a", { emissive: "#2a2208" });
+	const wood = b.mat("#4a3322");
+	const cloth = b.mat("#5a3a2a");
+
+	b.room(
+		"road",
+		[0, 0, 13],
+		6,
+		26,
+		4,
+		{ floor: road, wall: hedge, ceiling: sky },
+		["s"],
+	);
+	b.wallWithGap("back", "x", [0, 0, 26], 6, 4, [0, 1.1, 26], hedge);
+	b.door("gate", [-1, 0, 25.8], 2, 2.2, 0, b.mat("#2a2a2c"), {
+		open: true,
+		interactive: false,
+	});
+	b.box("start-block", [6, 4, 0.2], [0, 2, -0.2], hedge);
+
+	const makeScarecrow = (
+		name: string,
+		x: number,
+		z: number,
+		rot: number,
+		show: boolean,
+	) => {
+		const g = new TransformNode(name, b.scene);
+		g.position.set(x, 0, z);
+		g.rotation.y = rot;
+		b.box(`${name}-pole`, [0.08, 1.9, 0.08], [0, 0.95, 0], wood, {
+			collide: false,
+			parent: g,
+		});
+		b.box(`${name}-arm`, [1.4, 0.07, 0.07], [0, 1.45, 0], wood, {
+			collide: false,
+			parent: g,
+		});
+		b.box(`${name}-body`, [0.4, 0.7, 0.2], [0, 1.2, 0], cloth, {
+			collide: false,
+			parent: g,
+		});
+		b.box(`${name}-head`, [0.3, 0.3, 0.3], [0, 1.8, 0], straw, {
+			collide: false,
+			parent: g,
+		});
+		g.setEnabled(show);
+		b.register(name, g);
+	};
+	makeScarecrow("sc-a", -2.4, 6, Math.PI / 2, true);
+	makeScarecrow("sc-b", 2.4, 12, -Math.PI / 2, true);
+	makeScarecrow("sc-c", -2.4, 18, Math.PI / 2, true);
+	makeScarecrow("sc-d", 0, 21, Math.PI, false);
+
+	b.sign(
+		"sign",
+		["出口", "この先 ×"],
+		[1.2, 0.5],
+		[2.9, 1.8, 4],
+		-Math.PI / 2,
+		{
+			bg: "#d8d0b8",
+			fg: "#2a1a0a",
+			glow: 0.2,
+		},
+	);
+	b.lamp("lantern", [0, 3, 3], "#ffb060", 0.5, 8, false);
+
+	b.figure(
+		"ghost",
+		[0, 0, 24],
+		{
+			skin: "#b8a060",
+			hair: "#6a5a20",
+			cloth: "#4a3020",
+			eyes: "#000000",
+			height: 1.0,
+			longHair: false,
+		},
+		false,
+	);
+	return {};
 };
