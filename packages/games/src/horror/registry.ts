@@ -6,32 +6,32 @@ import type { AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
  * ここに自動登録される（import.meta.glob）ので、作品を足してもこのファイルは変わらない。
  */
 export interface HorrorHandle {
-  render(): void;
+	render(): void;
 }
 
 interface HorrorModule {
-  start(
-    engine: AbstractEngine,
-    canvas: HTMLCanvasElement,
-  ): Promise<HorrorHandle>;
+	start(
+		engine: AbstractEngine,
+		canvas: HTMLCanvasElement,
+	): Promise<HorrorHandle>;
 }
 
 const modules = import.meta.glob<HorrorModule>("./*/index.ts");
 
 export function listHorrorSlugs(): string[] {
-  return Object.keys(modules).map((k) => k.split("/")[1] ?? k);
+	return Object.keys(modules).map((k) => k.split("/")[1] ?? k);
 }
 
 export async function startHorror(
-  engine: AbstractEngine,
-  canvas: HTMLCanvasElement,
-  slug: string,
+	engine: AbstractEngine,
+	canvas: HTMLCanvasElement,
+	slug: string,
 ): Promise<HorrorHandle | null> {
-  const load = modules[`./${slug}/index.ts`];
-  if (!load) {
-    console.warn(`horror "${slug}" not found`, listHorrorSlugs());
-    return null;
-  }
-  const mod = await load();
-  return mod.start(engine, canvas);
+	const load = modules[`./${slug}/index.ts`];
+	if (!load) {
+		console.warn(`horror "${slug}" not found`, listHorrorSlugs());
+		return null;
+	}
+	const mod = await load();
+	return mod.start(engine, canvas);
 }
