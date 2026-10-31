@@ -1,170 +1,93 @@
-import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { LevelBuilder } from "./kit/builders";
 import type { BuildLevel } from "./kit/game";
 
 /**
- * 霧の岬の旧灯台。細い岬の道 x=-3.5〜3.5, z=0〜24、突き当たり(z=24〜30)が灯台の根元の部屋。
- * 入口の鉄門 path-gate(z=1.5)、西側の番小屋(cottage、窓 win-lit/win-person/win-dark)、
- * 灯台の根元の部屋 tower-base（床のスイッチ代わりに zone で判定）。頂上の光(beam)は update フックで回転。
+ * 灯台の灯室。部屋は x=-3〜3, z=0〜7、南壁（z=0）中央に扉。
+ * 北壁にモニター（sign）、中央にテーブルとマイク、ソファは東西。
  */
 export const buildLevel: BuildLevel = (b: LevelBuilder) => {
-  const grass = b.mat("#2a3428");
-  const stone = b.mat("#a0a49c");
-  const white = b.mat("#d8d8d0");
-  const roof = b.mat("#3a2a24");
-  const iron = b.mat("#2a2c30", { specular: 0.4 });
-  const sea = b.mat("#0a1620", { emissive: "#050c14" });
+	const carpet = b.mat("#2a1830");
+	const wall = b.mat("#3a2a44");
+	const ceiling = b.mat("#1a1220");
+	const sofa = b.mat("#5a1a3a");
+	const table = b.mat("#18141c", { specular: 0.5 });
+	const black = b.mat("#101010");
 
-  // ---- 岬の道 ----
-  b.box("path", [7, 0.2, 26], [0, -0.1, 11], grass);
-  b.box("sea", [200, 0.2, 200], [0, -9, 40], sea, { collide: false });
-  b.box("rail-w", [0.1, 0.9, 24], [-3.5, 0.45, 12], iron);
-  b.box("rail-e", [0.1, 0.9, 24], [3.5, 0.45, 12], iron);
-  b.box("cliff-block-w", [0.2, 4, 26], [-3.7, 2, 11], iron).isVisible = false;
-  b.box("cliff-block-e", [0.2, 4, 26], [3.7, 2, 11], iron).isVisible = false;
-  b.box("back-block", [7, 4, 0.2], [0, 2, -2], iron).isVisible = false;
-  b.door("path-gate", [-1.5, 0, 1.5], 3, 1.8, 0, iron, {
-    open: true,
-    interactive: false,
-  });
-  b.box("gate-post-w", [0.3, 1.8, 0.3], [-1.7, 0.9, 1.5], stone);
-  b.box("gate-post-e", [0.3, 1.8, 0.3], [1.7, 0.9, 1.5], stone);
-  b.sign("warn", ["立入禁止", "旧 岬灯台"], [1.2, 0.6], [-1.7, 1.5, 1.3], 0, {
-    bg: "#e8e0c0",
-    fg: "#6a1010",
-    glow: 0.3,
-  });
+	b.room("box", [0, 0, 3.5], 6, 7, 2.6, { floor: carpet, wall, ceiling }, [
+		"s",
+	]);
+	b.wallWithGap("front", "x", [0, 0, 0], 6, 2.6, [0, 1.05, 2.1], wall);
+	b.door("room-door", [-0.5, 0, 0], 1, 2.1, 0, b.mat("#2a2030"), {
+		open: true,
+		interactive: false,
+	});
+	// 扉の外の廊下（歩き出せない）
+	for (const [n, size, pos] of [
+		["hall-s", [6, 3, 0.2], [0, 1.5, -3]],
+		["hall-w", [0.2, 3, 3], [-1.5, 1.5, -1.5]],
+		["hall-e", [0.2, 3, 3], [1.5, 1.5, -1.5]],
+	] as const) {
+		b.box(n, size, pos, wall).isVisible = false;
+	}
+	b.box("hall-floor", [3, 0.2, 3], [0, -0.1, -1.5], carpet);
 
-  // ---- 番小屋 ----
-  b.box("cottage", [3, 3, 4], [-5.2, 1.5, 12], white, { collide: false });
-  b.box("cottage-roof", [3.4, 0.4, 4.4], [-5.2, 3.2, 12], roof, {
-    collide: false,
-  });
-  b.box("cottage-block", [1, 3, 4.2], [-3.9, 1.5, 12], iron).isVisible = false;
-  b.sign("win-lit", ["　"], [1.0, 0.8], [-3.68, 1.7, 12], -Math.PI / 2, {
-    bg: "#f0c060",
-    fg: "#000",
-    glow: 0.9,
-  });
-  const winPerson = b.sign(
-    "win-person",
-    ["▂▇▂", "▐█▌"],
-    [1.0, 0.8],
-    [-3.67, 1.7, 12],
-    -Math.PI / 2,
-    {
-      bg: "#f0c060",
-      fg: "#0a0604",
-      glow: 0.9,
-    },
-  );
-  winPerson.setEnabled(false);
-  const winDark = b.sign(
-    "win-dark",
-    ["　"],
-    [1.0, 0.8],
-    [-3.66, 1.7, 12],
-    -Math.PI / 2,
-    {
-      bg: "#060606",
-      fg: "#000",
-      glow: 0.05,
-    },
-  );
-  winDark.setEnabled(false);
-  b.lamp("cottage", [-3.2, 1.8, 12], "#f0c060", 0.7, 6, false);
+	for (const x of [-2.5, 2.5]) {
+		b.box(`sofa-${x}`, [0.8, 0.45, 4], [x, 0.23, 3.8], sofa);
+		b.box(`sofa-back-${x}`, [0.2, 0.9, 4], [x * 1.12, 0.6, 3.8], sofa);
+	}
+	b.box("table", [1.2, 0.5, 2.4], [0, 0.25, 3.6], table);
+	const radio = b.box("radio", [0.07, 0.07, 0.25], [0, 0.54, 3.6], black);
+	b.register("radio", radio);
+	const sw = b.box(
+		"switch",
+		[0.1, 0.03, 0.2],
+		[0.3, 0.52, 4.3],
+		b.mat("#303030"),
+		{ collide: false },
+	);
+	b.register("switch", sw);
 
-  // ---- 灯台の根元の部屋と塔 ----
-  b.room(
-    "base",
-    [0, 0, 27],
-    6,
-    6,
-    4,
-    { floor: stone, wall: white, ceiling: stone },
-    ["s"],
-  );
-  b.box("base-gap-l", [2.2, 4, 0.2], [-1.9, 2, 24], white);
-  b.box("base-gap-r", [2.2, 4, 0.2], [1.9, 2, 24], white);
-  b.box("base-gap-top", [1.6, 1.8, 0.2], [0, 3.1, 24], white);
-  b.cylinder("tower", 12, 5, [0, 10.3, 27], white, {
-    collide: false,
-    diameterTop: 3.6,
-  });
-  b.box("lantern", [3, 1.6, 3], [0, 16.8, 27], iron, { collide: false });
-  b.box("stairs", [1.2, 2.6, 1.6], [-2, 1.3, 28.6], stone);
-  b.sign(
-    "log",
-    ["航海日誌", "最後の日付：昭和三十一年"],
-    [1.4, 0.7],
-    [2.8, 1.5, 27],
-    Math.PI / 2,
-    {
-      bg: "#e8dcb8",
-      fg: "#30200c",
-      glow: 0.3,
-    },
-  );
-  b.lamp("base", [0, 3.4, 27], "#f0c880", 0.6, 8, false);
+	const tvOpts = { bg: "#e0e8f0", fg: "#101820", glow: 0.9 };
+	b.sign(
+		"log-a",
+		["灯台日誌", "異常なし"],
+		[2.4, 1.3],
+		[0, 1.5, 6.95],
+		0,
+		tvOpts,
+	);
+	const tvB = b.sign(
+		"log-b",
+		["■ ■ ■ ■", "かえして", "うしろにいる"],
+		[2.4, 1.3],
+		[0, 1.5, 6.93],
+		0,
+		{ bg: "#300000", fg: "#ff3030", glow: 0.9 },
+	);
+	tvB.setEnabled(false);
+	b.sign("price", ["面会", "お断り"], [1, 0.4], [-1.5, 1.9, 0.12], 0, {
+		bg: "#d8d0b8",
+		fg: "#2a1a0a",
+		glow: 0.2,
+	});
 
-  // ---- 回転する光 ----
-  const beam = new TransformNode("beam", b.scene);
-  beam.position.set(0, 16.8, 27);
-  b.box(
-    "beam-a",
-    [0.6, 0.6, 40],
-    [0, 0, 20],
-    b.mat("#fff4c0", { emissive: "#fff4c0", alpha: 0.28 }),
-    {
-      collide: false,
-      parent: beam,
-    },
-  );
-  beam.setEnabled(false);
+	b.lamp("lamp", [0, 2.3, 3.5], "#ffe080", 0.6, 8, false);
+	b.lamp("red", [0, 2.3, 5.5], "#ff2020", 0.5, 7, false).light.setEnabled(
+		false,
+	);
 
-  // ---- 灯台守の人影と最後の人影 ----
-  const keeper = b.figure(
-    "keeper",
-    [2.4, 0, 20],
-    {
-      skin: "#b8bcb0",
-      hair: "#0a0a0a",
-      cloth: "#202830",
-      eyes: "#000000",
-      height: 1.1,
-    },
-    false,
-  );
-  keeper.rotation.y = Math.PI;
-  b.figure(
-    "ghost",
-    [0, 0, -40],
-    {
-      skin: "#b8bcb0",
-      hair: "#d8d8d0",
-      cloth: "#202830",
-      eyes: "#000000",
-      height: 1.1,
-    },
-    false,
-  );
-
-  let spinning = false;
-  return {
-    update: (_g, dt) => {
-      if (spinning) {
-        beam.rotation.y += 0.9 * dt;
-      }
-    },
-    custom: {
-      beamOn: () => {
-        beam.setEnabled(true);
-        spinning = true;
-      },
-      beamOff: () => {
-        spinning = false;
-        beam.setEnabled(false);
-      },
-    },
-  };
+	b.figure(
+		"keeper",
+		[-2.4, 0.45, 5.8],
+		{
+			skin: "#a8b8b8",
+			hair: "#050505",
+			cloth: "#c8a820",
+			eyes: "#000000",
+			height: 1.0,
+			longHair: true,
+		},
+		false,
+	);
+	return {};
 };
