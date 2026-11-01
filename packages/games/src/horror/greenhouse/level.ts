@@ -80,10 +80,11 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
     const hinge = new TransformNode(`petal-hinge-${k}`, b.scene);
     hinge.parent = holder;
     hinge.rotation.x = -1.3;
+    // 花びら越しに中の人影を「見た」判定が通るよう、ピック対象外にする
     b.box(`petal-${k}`, [0.5, 0.05, 1.1], [0, 0, 0.55], petal, {
       collide: false,
       parent: hinge,
-    });
+    }).isPickable = false;
     hinges.push(hinge);
   }
   bloom.setEnabled(false);
