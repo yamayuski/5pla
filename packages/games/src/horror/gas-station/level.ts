@@ -87,10 +87,11 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
   const car = new TransformNode("car", b.scene);
   car.position.set(2.6, 0, 9);
   b.box("car-body", [1.8, 0.7, 4.3], [0, 0.6, 0], carMat, { parent: car });
+  // 窓越しに後部座席の人影を「見た」判定が通るよう、ガラスはピック対象外にする
   b.box("car-cabin", [1.6, 0.62, 2.3], [0, 1.26, -0.2], glass, {
     parent: car,
     collide: false,
-  });
+  }).isPickable = false;
   b.box("car-roof", [1.6, 0.06, 2.1], [0, 1.6, -0.2], carMat, {
     parent: car,
     collide: false,
