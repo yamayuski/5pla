@@ -24,6 +24,8 @@ export const config: HorrorConfig = {
     range: 10,
     color: [1, 0.97, 0.9],
   },
+  // カウンターや机越しでも人影の顔の高さで「見た」判定をする
+  lookNodeCenter: "eye",
   walkSpeed: 0.07,
   droneLevel: 0.04,
   triggers: [
