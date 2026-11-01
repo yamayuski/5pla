@@ -87,7 +87,8 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
   }
 
   // ---- 大型ケージと布 ----
-  b.box("big-cage", [1.8, 1.4, 1.2], [0, 0.7, 9.3], b.mat("#8a8a8a", { alpha: 0.3, specular: 0.6 }));
+  // 格子越しに中の人影を「見た」判定が通るよう、ケージはピック対象外にする
+  b.box("big-cage", [1.8, 1.4, 1.2], [0, 0.7, 9.3], b.mat("#8a8a8a", { alpha: 0.3, specular: 0.6 })).isPickable = false;
   const cloth = b.box("cloth", [1.9, 1.45, 1.25], [0, 0.73, 9.3], clothMat);
   b.register("cloth", cloth);
   b.sign("cage-tag", ["大型犬用", "※ 布をめくらないでください"], [0.9, 0.3], [0, 1.6, 8.66], 0, {
