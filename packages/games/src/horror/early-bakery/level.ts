@@ -34,7 +34,7 @@ export const buildLevel: BuildLevel = (b: LevelBuilder) => {
 
   // 調べる対象
   b.box("oven-body", [3, 2.2, 1.6], [0, 1.1, 15.1], accent);
-  const odoor = b.box("oven-door-panel", [1.2, 1.0, 0.1], [0, 1.0, 14.25], b.mat("#c04010", { emissive: 0.5 }));
+  const odoor = b.box("oven-door-panel", [1.2, 1.0, 0.1], [0, 1.0, 14.25], b.mat("#c04010", { emissive: "#802000" }));
   b.register("oven-door", odoor);
 
   // 壁の見えない境界
